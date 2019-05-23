@@ -1,24 +1,44 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1 class="title">Ice Creams</h1>
+    <ice-cream-table :icecreams="icecreams"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import IceCreamTable from "@/components/IceCreamTable.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    HelloWorld
+    IceCreamTable
+  },
+  data() {
+    return {
+      icecreams: [
+        {
+          id: 1,
+          flavor_name: "Nougat",
+          label_name: "Pingviini",
+          date: "2019-5-22 00:00:00",
+          qty: 1
+        },
+        {
+          id: 2,
+          flavor_name: "Tiikeri",
+          label_name: "Pingviini",
+          date: "2019-5-14 00:00:00",
+          qty: 0.5
+        }
+      ]
+    };
   }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
