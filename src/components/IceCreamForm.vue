@@ -4,21 +4,21 @@
       <div class="field">
         <label class="label">Flavor name</label>
         <div class="control">
-          <input v-model="icecream.flavor" class="input" type="text">
+          <input v-model="icecream.flavor" class="input" type="text" required>
         </div>
       </div>
 
       <div class="field">
         <label class="label">Label name</label>
         <div class="control">
-          <input v-model="icecream.label" class="input" type="text">
+          <input v-model="icecream.label" class="input" type="text" required>
         </div>
       </div>
 
       <div class="field">
         <label class="label">Quantity (L)</label>
         <div class="control">
-          <input v-model="icecream.qty" class="input" type="number" step="0.1">
+          <input v-model="icecream.qty" class="input" type="number" step="0.1" required>
         </div>
       </div>
 
@@ -26,11 +26,10 @@
         <div class="field">
           <label class="label">Color</label>
           <div class="control">
-            <swatches v-model="icecream.color">
+            <swatches v-model="icecream.color" :colors="colors">
               <input
                 slot="trigger"
                 :value="icecream.color"
-                :colors="colors"
                 class="form__input__element input"
                 readonly
               >
@@ -71,14 +70,30 @@ export default {
         label: "",
         date: new Date().toISOString(),
         qty: "1.0",
-        color: "#FFFFFF"
+        color: "#000000"
       },
-      colors: ["#F0B684", "#F49E00", "#6E2904"]
+      colors: [
+        "#F0B684",
+        "#F49E00",
+        "#6E2904",
+        "#991626",
+        "#222222",
+        "#A10456",
+        "#DB1419",
+        "#00905D",
+        "#BF5927",
+        "#E74E10",
+        "#F7EEDD"
+      ]
     };
   },
   methods: {
     handleSubmit() {
       this.$emit("add:icecream", this.icecream);
+      this.icecream.flavor = "";
+      this.icecream.label = "";
+      this.icecream.qty = "1.0";
+      this.icecream.color = "#000000";
     }
   }
 };
