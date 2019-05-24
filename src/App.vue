@@ -3,15 +3,21 @@
     <div class="container">
       <h1 class="title">Ice Cream Inventory</h1>
       <h2 class="subtitle">A totally necessary app for your cold desserts.</h2>
-      <div class="columns">
+      <div class="columns is-8">
         <div class="column">
           <ice-cream-form @add:icecream="addIceCream"/>
         </div>
-        <div class="column">
-          <b-message title="Space for..." size="is-large" type="is-info">a pie chart?</b-message>
+        <div class="column is-half chart">
+          <pie-chart
+            :data="chartvalues()"
+            :legend="false"
+            :colors="colors()"
+            :donut="true"
+            suffix=" L"
+          ></pie-chart>
         </div>
       </div>
-      <ice-cream-table :icecreams="icecreams"/>
+      <ice-cream-table :icecreams="icecreams" @remove:icecream="removeIceCream"/>
     </div>
   </section>
 </template>
@@ -34,6 +40,7 @@ export default {
           flavor: "Nougat",
           label: "Pingviini",
           date: "2019-5-22 00:00:00",
+          color: "#F0B684",
           qty: 1
         },
         {
@@ -41,10 +48,28 @@ export default {
           flavor: "Tiikeri",
           label: "Pingviini",
           date: "2019-5-14 00:00:00",
+          color: "#F49E00",
           qty: 0.5
+        },
+        {
+          id: 3,
+          flavor: "Suklaa",
+          label: "Pingviini",
+          date: "2019-5-11 00:00:00",
+          color: "#6E2904",
+          qty: 2.2
         }
       ]
     };
+  },
+  mounted() {
+    if (localStorage.getItem("icecreams")) {
+      try {
+        this.icecreams = JSON.parse(localStorage.getItem("icecreams"));
+      } catch (e) {
+        localStorage.removeItem("icecreams");
+      }
+    }
   },
   methods: {
     addIceCream(icecream) {
@@ -55,6 +80,25 @@ export default {
       const id = lastId + 1;
       const newIceCream = { ...icecream, id };
       this.icecreams = [...this.icecreams, newIceCream];
+      this.saveIceCreams();
+    },
+    removeIceCream(id) {
+      this.icecreams = this.icecreams.filter(ic => ic.id !== id);
+      this.saveIceCreams();
+    },
+    saveIceCreams() {
+      const parsed = JSON.stringify(this.icecreams);
+      localStorage.setItem("icecreams", parsed);
+    },
+    colors() {
+      return this.icecreams.map(ic => {
+        return ic.color;
+      });
+    },
+    chartvalues() {
+      return this.icecreams.map(ic => {
+        return [ic.flavor, ic.qty];
+      });
     }
   }
 };
@@ -63,5 +107,9 @@ export default {
 <style>
 .columns {
   margin-top: 2rem;
+}
+
+.chart {
+  padding-top: 2rem !important;
 }
 </style>

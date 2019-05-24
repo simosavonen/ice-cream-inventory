@@ -10,7 +10,15 @@
         .toLocaleDateString("fi-FI", { timeZone: "Europe/Helsinki"}) }}
       </b-table-column>
 
-      <b-table-column field="qty" label="Quantity" numeric>{{ props.row.qty }}</b-table-column>
+      <b-table-column field="qty" label="Quantity" numeric centered>{{ props.row.qty }}</b-table-column>
+
+      <b-table-column label="Actions">
+        <button class="button is-outlined is-success">edit</button>
+        <button
+          class="button is-outlined is-danger"
+          @click="$emit('remove:icecream', props.row.id)"
+        >remove</button>
+      </b-table-column>
     </template>
   </b-table>
 </template>
@@ -24,4 +32,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.button {
+  margin-right: 1em;
+}
+</style>

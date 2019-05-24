@@ -9,8 +9,11 @@
   },
   "dependencies": {
     "buefy": "^0.7.6",
+    "chart.js": "^2.8.0",
     "core-js": "^2.6.5",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vue-chartkick": "^0.5.0",
+    "vue-swatches": "^1.0.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.7.0",
