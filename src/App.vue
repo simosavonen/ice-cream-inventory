@@ -27,7 +27,12 @@
 
         <div class="columns is-8">
           <div class="column">
-            <ice-cream-form @add:icecream="addIceCream"/>
+            <ice-cream-form
+              @add:icecream="addIceCream"
+              @edit:icecream="editIceCream"
+              @cancel:edit="cancelEdit"
+              v-bind:editing="editing"
+            />
           </div>
           <div class="column is-half chart">
             <pie-chart
@@ -44,7 +49,11 @@
             </div>
           </div>
         </div>
-        <ice-cream-table :icecreams="icecreams" @remove:icecream="removeIceCream"/>
+        <ice-cream-table
+          :icecreams="icecreams"
+          @remove:icecream="removeIceCream"
+          @editing:icecream="editingIceCream"
+        />
       </div>
     </section>
     <footer class="footer">
@@ -72,6 +81,7 @@ export default {
   },
   data() {
     return {
+      editing: {},
       icecreams: [
         {
           id: 1,
@@ -116,13 +126,39 @@ export default {
           ? this.icecreams[this.icecreams.length - 1].id
           : 0;
       const id = lastId + 1;
-      const newIceCream = { ...icecream, id, qty: parseFloat(icecream.qty) };
+      const newIceCream = {
+        ...icecream,
+        id,
+        qty: parseFloat(icecream.qty),
+        date: new Date().toISOString()
+      };
       this.icecreams = [...this.icecreams, newIceCream];
       this.saveIceCreams();
       this.$toast.open({
         message: "Added an ice cream!",
         type: "is-success"
       });
+    },
+    editingIceCream(icecream) {
+      this.editing = Object.assign({}, icecream);
+    },
+    cancelEdit() {
+      this.editing = {};
+    },
+    editIceCream(icecream) {
+      const editedIceCream = {
+        ...icecream,
+        qty: parseFloat(icecream.qty)
+      };
+      this.icecreams = this.icecreams.map(ic =>
+        ic.id === editedIceCream.id ? editedIceCream : ic
+      );
+      this.saveIceCreams();
+      this.$toast.open({
+        message: "Edited an ice cream!",
+        type: "is-info"
+      });
+      this.cancelEdit();
     },
     removeIceCream(id) {
       this.icecreams = this.icecreams.filter(ic => ic.id !== id);
@@ -131,6 +167,7 @@ export default {
         message: "Removed an ice cream!",
         type: "is-danger"
       });
+      this.cancelEdit();
     },
     saveIceCreams() {
       const parsed = JSON.stringify(this.icecreams);

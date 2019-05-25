@@ -1,29 +1,16 @@
 # ice-cream-inventory
 
-## Project setup
-```
-npm install
-```
+A monst necessary app for your cold delights.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Running at https://ice-cream-inventory.surge.sh/
 
-### Compiles and minifies for production
-```
-npm run build
-```
+A single page app for keeping track of your fridge contents. Implements basic CRUD functionality and displays a donut chart for the amounts.
 
-### Run your tests
-```
-npm run test
-```
+### Instructions
 
-### Lints and fixes files
-```
-npm run lint
-```
+- clone or download the repo
+- run `npm install`
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### To-Do
+
+Figure out code splitting, `npm run build` complains about the entry bundle size. Perhaps putting a donut chart on the front page was a bad idea. Also, using https://buefy.org/ just for Table and Toast was overkill, could have used https://bulma.io/ css classes directly.
