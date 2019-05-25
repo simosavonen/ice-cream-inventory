@@ -1,7 +1,5 @@
 # Ice Cream Inventory
 
-A mont necessary app for your cold delights.
-
 Running at https://ice-cream-inventory.surge.sh/
 
 A Single-Page application for keeping track of your fridge contents. Implements basic CRUD functionality and displays a donut chart for the litre amounts.
