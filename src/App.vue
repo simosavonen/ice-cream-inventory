@@ -184,7 +184,10 @@ export default {
       });
     },
     totalAmount() {
-      return this.icecreams.reduce((sum, ic) => sum + ic.qty, 0);
+      return new Intl.NumberFormat("fi-FI", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+      }).format(this.icecreams.reduce((sum, ic) => sum + ic.qty, 0));
     }
   }
 };
